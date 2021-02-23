@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Your To-Do Items</title>
+        <link rel="stylesheet" href="static/main.css">
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+    
+    </head>
+    <body>
+        <div class="form-group">
+            <br><br>
+            <h1>To-Do <small>list</small></h1>
+            <form role="form" action="/" method="POST">
+                {% csrf_token %}
+                <input type="text" placeholder="Title" name="title">
+                <button type="submit" class="btn btn btn-primary">Add</button>
+                <button type="submit" class="btn btn btn-primary" value="delete" name="delete">Delete All</button>
+                <ol id="todo_items">
+                    <br>
+                    <h4>Your todo items</h4>
+                    <button type="submit" class="btn btn btn-secondary" name="save" value="save">Save</button>
+                    <br><br>
+                    {% for task in tasks %}
+                        <div>
+                            {% if task.completed == True %}
+                                <div>
+                                    <strike>{{task.title}}</strike>
+                                    <input type="checkbox" id="action" value="clicked" name={{task.id}} checked>
+                                    | <a href="delete/{{task.id}}">Delete</a> 
+                                </div>
+                            {% else %}
+                                <div>
+                                    {{task.title}}
+                                    <input type="checkbox" id="action" value="clicked" name={{task.id}}>  
+                                    | <a href="delete/{{task.id}}">Delete</a>
+                                </div>
+                            {% endif %}
+                            </div>
+                    {% endfor %}
+                </ol>
+                <ul class="list-unstyled" id="todo"></ul>
+            </form>
+        </div>
+    </body>
+</html>
